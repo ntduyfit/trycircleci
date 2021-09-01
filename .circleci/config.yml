@@ -35,5 +35,7 @@ workflows:
                 - main
   build-and-test:
     jobs:
-      - deploy-testing
+      - deploy-testing:
+          pre-steps:
+            - ghpr/get-pr-info
             
