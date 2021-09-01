@@ -1,0 +1,37 @@
+# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
+version: 2.1
+jobs:
+  deploy-production:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          name: Deploy over SSH
+          command: ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOST "sh /script/trycd-prod.sh";
+  deploy-testing:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          name: Deploy over SSH
+          command: ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOST "sh /script/trycd-test.sh";
+
+
+# build job will update in the near future
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy-production:
+          filters:
+            branches:
+              only:
+                - master
+  build-and-test:
+    jobs:
+      - deploy-testing:
+          filters:
+            branches:
+              only:
+                - dev
+            
