@@ -1,5 +1,7 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
+orbs:
+  ghpr: narrativescience/ghpr@1.1.2
 jobs:
   deploy-production:
     machine:
@@ -30,10 +32,9 @@ workflows:
               only:
                 - main
   build-and-test:
+    when:
+      condition:
+        equal: [ "dev", $GITHUB_PR_BASE_BRANCH ]
     jobs:
-      - deploy-testing:
-          filters:
-            branches:
-              only:
-                - dev
+      - deploy-testing
             
