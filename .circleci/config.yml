@@ -43,9 +43,6 @@ workflows:
                 - main
   build-and-test:
     when:
-      equal: [ "dev", $GITHUB_PR_BASE_BRANCH]
+      equal: [ "dev", $GITHUB_PR_BASE_BRANCH ]
     jobs:
-      - deploy-testing:
-          pre-steps:
-            - ghpr/get-pr-info
-            
+      - deploy-testing
