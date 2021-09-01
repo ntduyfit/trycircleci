@@ -3,6 +3,11 @@ version: 2.1
 orbs:
   ghpr: narrativescience/ghpr@1.1.2
 jobs:
+  pre-job: 
+    machine:
+      enabled: true
+    steps:
+      - ghpr/get-pr-info
   deploy-production:
     machine:
       enabled: true
@@ -26,6 +31,9 @@ jobs:
 # build job will update in the near future
 workflows:
   version: 2
+  pre:
+    jobs:
+      - pre-job
   deploy:
     jobs:
       - deploy-production:
@@ -34,6 +42,8 @@ workflows:
               only:
                 - main
   build-and-test:
+    when:
+      equal: [ "dev", $GITHUB_PR_BASE_BRANCH]
     jobs:
       - deploy-testing:
           pre-steps:
