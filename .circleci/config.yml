@@ -43,6 +43,6 @@ workflows:
                 - main
   build-and-test:
     when:
-      equal: [ "dev", $PR_BASE_BRANCH]
+      equal: [ "dev", $GITHUB_PR_BASE_BRANCH ]
     jobs:
       - deploy-testing
