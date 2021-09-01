@@ -26,7 +26,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
   build-and-test:
     jobs:
       - deploy-testing:
