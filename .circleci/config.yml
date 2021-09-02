@@ -42,3 +42,7 @@ workflows:
       - deploy-testing:
           pre-steps:
             - ghpr/get-pr-info
+          filters:
+            branches:
+              ignore:
+                - main
