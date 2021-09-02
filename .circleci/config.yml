@@ -19,6 +19,7 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
+            rsync;
             if [ "$GITHUB_PR_BASE_BRANCH" == "dev" ];
             then
               scp -P $SSH_PORT -r ~/app/* $SSH_USERNAME@$SSH_HOST:/home/trycircleci-test;
