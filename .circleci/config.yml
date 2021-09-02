@@ -38,8 +38,6 @@ workflows:
               only:
                 - main
   build-and-test:
-    when:
-      equal: [ "dev", $GITHUB_PR_BASE_BRANCH ]
     jobs:
       - deploy-testing:
           pre-steps:
