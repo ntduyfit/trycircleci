@@ -3,11 +3,6 @@ version: 2.1
 orbs:
   ghpr: narrativescience/ghpr@1.1.2
 jobs:
-  pre-job: 
-    machine:
-      enabled: true
-    steps:
-      - ghpr/get-pr-info
   deploy-production:
     machine:
       enabled: true
@@ -24,16 +19,17 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            echo "$GITHUB_PR_BASE_BRANCH - 1"
-            scp -P $SSH_PORT -r ~/app/ $SSH_USERNAME@$SSH_HOST:/home/directory/;
-
+            if [ "$GITHUB_PR_BASE_BRANCH" == "dev" ];
+            then
+              scp -P $SSH_PORT -r ~/app/ $SSH_USERNAME@$SSH_HOST:/home/directory/;
+            else
+              circleci-agent step halt
+              exit 0
+            fi
 
 # build job will update in the near future
 workflows:
   version: 2
-  pre:
-    jobs:
-      - pre-job
   deploy:
     jobs:
       - deploy-production:
@@ -45,4 +41,6 @@ workflows:
     when:
       equal: [ "dev", $GITHUB_PR_BASE_BRANCH ]
     jobs:
-      - deploy-testing
+      - deploy-testing:
+          pre-steps:
+            - ghpr/get-pr-info
