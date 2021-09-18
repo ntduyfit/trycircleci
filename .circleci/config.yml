@@ -15,7 +15,7 @@ jobs:
             command: |
                 export NVM_DIR="/opt/circleci/.nvm"
                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
-                nvm install --lts && nvm use 'lts/*' && nvm alias default 'lts/*'
+                nvm install nvm ls-remote
                 node -v
       - run:
             name: Deploy over SSH
