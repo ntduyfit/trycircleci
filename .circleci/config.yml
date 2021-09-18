@@ -6,35 +6,35 @@ jobs:
   deploy-production:
     machine:
       enabled: true
-      working_directory: ~/app
-      steps:
-        - checkout
-        - run: 
-              name: node
-              command: |
-                  export NVM_DIR="/opt/circleci/.nvm"
-                  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
-                  nvm install --lts
-        - run:
-              name: Deploy over SSH
-              command: |
-                  rsync -vahe "ssh -p $SSH_PORT" --progress ~/app  $SSH_USERNAME@$SSH_HOST:/home;
+    working_directory: ~/app
+    steps:
+      - checkout
+      - run: 
+            name: node
+            command: |
+                export NVM_DIR="/opt/circleci/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
+                nvm install --lts
+      - run:
+            name: Deploy over SSH
+            command: |
+                rsync -vahe "ssh -p $SSH_PORT" --progress ~/app  $SSH_USERNAME@$SSH_HOST:/home;
   deploy-testing:
     machine:
       enabled: true
-      working_directory: ~/app
-      steps:
-        - checkout
-        - run: 
-              name: node
-              command: |
-                  NVM_DIR="/opt/circleci/.nvm"
-                  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; 
-                  nvm install --lts
-        - run:
-              name: Deploy over SSH
-              command: |
-                  rsync -vahe "ssh -p $SSH_PORT" --progress ~/app  $SSH_USERNAME@$SSH_HOST:/home;
+    working_directory: ~/app
+    steps:
+      - checkout
+      - run: 
+            name: node
+            command: |
+                NVM_DIR="/opt/circleci/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; 
+                nvm install --lts
+      - run:
+            name: Deploy over SSH
+            command: |
+                rsync -vahe "ssh -p $SSH_PORT" --progress ~/app  $SSH_USERNAME@$SSH_HOST:/home;
 
 
 # build job will update in the near future
