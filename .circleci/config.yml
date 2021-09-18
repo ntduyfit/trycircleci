@@ -2,6 +2,7 @@
 version: 2.1
 orbs:
   ghpr: narrativescience/ghpr@1.1.2
+  node: circleci/node@4.6.0
 jobs:
   deploy-production:
     machine:
@@ -14,7 +15,8 @@ jobs:
             command: |
                 export NVM_DIR="/opt/circleci/.nvm"
                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
-                nvm install --lts
+                nvm install v14.17.6 && nvm use v14.17.6 && nvm alias default v14.17.6
+                node -v
       - run:
             name: Deploy over SSH
             command: |
