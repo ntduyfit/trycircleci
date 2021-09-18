@@ -15,22 +15,22 @@ jobs:
                   export NVM_DIR="/opt/circleci/.nvm"
                   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
                   nvm install --lts
-            - run:
-                  name: Deploy over SSH
-                  command: |
-                      rsync -vahe "ssh -p $SSH_PORT" --progress ~/app  $SSH_USERNAME@$SSH_HOST:/home;
+        - run:
+              name: Deploy over SSH
+              command: |
+                  rsync -vahe "ssh -p $SSH_PORT" --progress ~/app  $SSH_USERNAME@$SSH_HOST:/home;
   deploy-testing:
     machine:
-        enabled: true
-        working_directory: ~/app
-        steps:
-            - checkout
-            - run: 
-                  name: node
-                  command: |
-                      NVM_DIR="/opt/circleci/.nvm"
-                      [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                      nvm install --lts
+      enabled: true
+      working_directory: ~/app
+      steps:
+        - checkout
+        - run: 
+              name: node
+              command: |
+                  NVM_DIR="/opt/circleci/.nvm"
+                  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; 
+                  nvm install --lts
             - run:
                   name: Deploy over SSH
                   command: |
